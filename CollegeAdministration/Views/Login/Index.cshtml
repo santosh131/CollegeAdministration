@@ -1,9 +1,10 @@
-﻿@model CollegeAdministration.Models.User
+﻿ 
+    @model CollegeAdministration.Models.User
 
-@using (Html.BeginForm("Login","Login",FormMethod.Post)) 
+@using (Html.BeginForm("Login","Login",FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    
+        @Html.AntiForgeryToken()
+
     <div class="form-horizontal">
         <h4>Login</h4>
         <hr />
