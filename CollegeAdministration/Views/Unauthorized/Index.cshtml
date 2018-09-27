@@ -1,1 +1,14 @@
-﻿Unauthorized
+﻿
+@if (!Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Index", "Login", FormMethod.Post, new { id = "loginForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <a href="javascript:document.getElementById('loginForm').submit()">Log in</a>
+    }
+}
+Unauthorized
+@if (Model.Exception != null)
+{
+    <div class="alert-danger">@Model.Exception</div>
+}

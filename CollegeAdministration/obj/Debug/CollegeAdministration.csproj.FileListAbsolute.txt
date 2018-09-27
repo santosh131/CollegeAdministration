@@ -95,3 +95,15 @@ C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\obj\Debu
 C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\obj\Debug\CollegeAdministration.csproj.CopyComplete
 C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\obj\Debug\CollegeAdministration.dll
 C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\obj\Debug\CollegeAdministration.pdb
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\DnsClient.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Bson.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Driver.Core.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Driver.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Driver.Legacy.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\System.Buffers.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\DnsClient.xml
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Bson.xml
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Driver.xml
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Driver.Core.xml
+C:\Users\santo\source\repos\CollegeAdministration\CollegeAdministration\bin\MongoDB.Driver.Legacy.xml

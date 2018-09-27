@@ -10,14 +10,13 @@ using CollegeAdministration.Providers;
 namespace CollegeAdministration.Controllers
 {
     [CustomAuthorization]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
+            throw new Exception("asds");
             ViewBag.Title = "Home Page";
-            List<Student> lstStudents = new List<Student>();
-            lstStudents.Add(new Student() { StudentId=1, Name="Samuel", ActiveInd=true, Address="123 Ljj Ave", Mobile="121313" });
-            return View(lstStudents);
+            return View();
         }
     }
 }

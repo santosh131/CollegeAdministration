@@ -34,7 +34,7 @@ namespace CollegeAdministration
                         FormsAuthenticationTicket tc = fi.Ticket;
                         
                         CustomPrincipal cp = new CustomPrincipal(tc.Name);
-                        cp.Menus =new List<string> { "Home", "sample" };
+                        cp.Menus =new List<string> { "Home", "sample","Student" };
                         cp.UserId =int.Parse( tc.UserData);
                         HttpContext.Current.User = cp;
                     }

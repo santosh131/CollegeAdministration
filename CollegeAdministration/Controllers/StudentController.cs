@@ -1,5 +1,9 @@
-﻿using CollegeAdministration.Models;
+﻿using CollegeAdministration.Infrastructure;
+using CollegeAdministration.Models;
 using CollegeAdministration.Providers;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +15,21 @@ namespace CollegeAdministration.Controllers
     [CustomAuthorization]
     public class StudentController : Controller
     {
+        MongoDBContext mc = new MongoDBContext();
         // GET: Student
         public ActionResult Index()
         {
-            List<Student> lstStudents = new List<Student>();
-            lstStudents.Add(new Student() { StudentId = 1, Name = "Samuel", ActiveInd = true, Address = "123 NY Ave", Mobile = "123456789" });
-            return View(lstStudents);
+            var students = mc._db.GetCollection<Student>("Student").FindAll().ToList();
+
+            return View(students);
         }
 
         // GET: Student/Details/5
         public ActionResult Details(int id)
         {
+            var students = mc._db.GetCollection<Student>("Student");
+            var query = Query<Student>.EQ(p => p.StudentId, id);
+            var stud = students.FindOne(query);
             return View();
         }
 
@@ -33,16 +41,35 @@ namespace CollegeAdministration.Controllers
 
         // POST: Student/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Student student)
         {
             try
             {
                 // TODO: Add insert logic here
+                var students = mc._db.GetCollection<Student>("Student");
+                var maxStudId = 1;
+                if (students.FindAll().Count() > 0)
+                {
+                    maxStudId = students.Find(Query.Empty).Max(x => x.StudentId);
+                }
+                var query = Query.And(Query.EQ("Name", student.Name));
+                var count = students.FindAs<Student>(query).Count();
+                if (count == 0)
+                {
+                    student.StudentId = maxStudId + 1;
+                    students.Insert<Student>(student);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Student already exists";
+                    return View("Create", student);
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
+                ViewBag.ErrorMessage = "Insert Student: " + ex.Message;
                 return View();
             }
         }
@@ -50,21 +77,28 @@ namespace CollegeAdministration.Controllers
         // GET: Student/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var students = mc._db.GetCollection<Student>("Student");
+            var query = Query<Student>.EQ(p => p.StudentId , id);
+            var stud = students.FindOne(query);
+            return View(stud);
         }
 
         // POST: Student/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Student student)
         {
             try
-            {
-                // TODO: Add update logic here
-
+            { 
+                var students = mc._db.GetCollection<Student>("Student");
+                var query = Query<Student>.EQ(p => p.StudentId, id);
+                var stud=students.FindOne(query);
+                student.Id = stud.Id;
+                students.Update(query, Update.Replace(student),UpdateFlags.None,WriteConcern.Acknowledged);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
+                ViewBag.ErrorMessage = "Update Student: "+ex.Message;
                 return View();
             }
         }
@@ -72,7 +106,10 @@ namespace CollegeAdministration.Controllers
         // GET: Student/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var students = mc._db.GetCollection<Student>("Student");
+            var query = Query<Student>.EQ(p => p.StudentId, id);
+            var stud = students.FindOne(query);
+            return View(stud);
         }
 
         // POST: Student/Delete/5
@@ -81,12 +118,15 @@ namespace CollegeAdministration.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                var students = mc._db.GetCollection<Student>("Student");
+                var query = Query<Student>.EQ(p => p.StudentId, id);
+                var result = students.Remove(query);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.ErrorMessage = "Delete Student: " + ex.Message;
                 return View();
             }
         }
